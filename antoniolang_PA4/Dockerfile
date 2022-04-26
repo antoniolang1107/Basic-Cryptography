@@ -1,7 +1,6 @@
-
-// must dervice latest python base image (FROM)
-// set WORKDIR as <netid>_PA4
-// copy python2.py script into working directory
-// copy requirements.txt into working directory
-// use RUN command to pip3 install all required libraries from the requirements.txt file
-// use CMD instruction to run python script with appropriate CLAs
+FROM python:3
+WORKDIR /home/tonycs/CS446_PA4/antoniolang_PA4
+COPY pythonCode2.py pythonCode2.py
+COPY requirements.txt requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
+CMD ["python", "./pythonCode2.py"]
