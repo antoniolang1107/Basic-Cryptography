@@ -3,7 +3,7 @@ from PIL import Image, ImageDraw
 import csv
 from scipy import constants
 import numpy as np
-import openSSL
+from OpenSSL import crypto, SSL
 import os
 
 color = 128 * np.ones(shape=[3], dtype=np.uint8)
@@ -24,12 +24,13 @@ key = crypto.PKey()
 key.generate_key(crypto.TYPE_RSA, 2048)
 
 certificate = crypto.X509()
-certificate.get_subject().country = 'United States'
-certificate.get_subject().state = 'Nevada'
-certificate.get_subject().city = 'Reno'
-certificate.get_subject().org = 'University of Nevada, Reno'
-certificate.get_subject().department = 'CSE'
-certificate.get_subject().comname = os.environ.get('USERNAME')
+certificate.get_subject().C = 'US'
+certificate.get_subject().ST = 'Nevada'
+certificate.get_subject().L = 'Reno'
+certificate.get_subject().O = 'University of Nevada, Reno'
+certificate.get_subject().OU = 'CSE'
+print (os.environ.get('USERNAME'))
+# certificate.get_subject().CN = os.environ.get('USERNAME')
 
 certificate.set_serial_number(42)
 certificate.gmtime_adj_notAfter(1577788000) # corresponds to 5 years in seconds
