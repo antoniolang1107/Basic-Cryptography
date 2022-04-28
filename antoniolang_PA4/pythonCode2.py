@@ -3,6 +3,8 @@ from PIL import Image, ImageDraw
 import csv
 from scipy import constants
 import numpy as np
+import openSSL
+import os
 
 color = 128 * np.ones(shape=[3], dtype=np.uint8)
 tuplevals = tuple(color)
@@ -17,4 +19,23 @@ try:
         reader = csv.DictReader(csvfile)
 except:
     pass
+
+key = crypto.PKey()
+key.generate_key(crypto.TYPE_RSA, 2048)
+
+certificate = crypto.X509()
+certificate.get_subject().country = 'United States'
+certificate.get_subject().state = 'Nevada'
+certificate.get_subject().city = 'Reno'
+certificate.get_subject().org = 'University of Nevada, Reno'
+certificate.get_subject().department = 'CSE'
+certificate.get_subject().comname = os.environ.get('USERNAME')
+
+certificate.set_serial_number(42)
+certificate.gmtime_adj_notAfter(1577788000) # corresponds to 5 years in seconds
+certificate.set_issuer(certificate.get_subject())
+
+certificate.set_pubkey(key)
+
+certificate.sign(key, 'sha512')
 #modify this code so that it also generates self signed certificate and keys
