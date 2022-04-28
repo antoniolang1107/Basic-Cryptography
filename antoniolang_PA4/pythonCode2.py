@@ -32,7 +32,7 @@ certificate.get_subject().ST = 'Nevada'
 certificate.get_subject().L = 'Reno'
 certificate.get_subject().O = 'University of Nevada, Reno'
 certificate.get_subject().OU = 'CSE'
-certificate.get_subject().CN = os.environ.get('USER')
+certificate.get_subject().CN = str(os.environ.get('USER'))
 
 certificate.set_serial_number(42)
 certificate.gmtime_adj_notAfter(1577788000) # corresponds to 5 years in seconds
