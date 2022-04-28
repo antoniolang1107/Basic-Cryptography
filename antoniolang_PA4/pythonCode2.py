@@ -22,6 +22,9 @@ except:
 
 key = crypto.PKey()
 key.generate_key(crypto.TYPE_RSA, 2048)
+certFile = os.path.join(os.getcwd(), 'antoniolang_selfSignedCertificate.PEM')
+pubKeyFile = os.path.join(os.getcwd(), 'antoniolang_publicKey.key')
+privKeyFile = os.path.join(os.getcwd(), 'antoniolang_privateKey.PEM')
 
 certificate = crypto.X509()
 certificate.get_subject().C = 'US'
@@ -38,5 +41,7 @@ certificate.set_issuer(certificate.get_subject())
 certificate.set_pubkey(key)
 
 certificate.sign(key, 'sha512')
-print("runs! :)")
-#modify this code so that it also generates self signed certificate and keys
+
+open(certFile, "wb").write(crypto.dump_certificate(crypto.FILETYPE_PEM, certificate))
+open(pubKeyFile, "wb").write(crypto.dump_publickey(crypto.FILETYPE_PEM, pkey = key))
+open(privKeyFile, "wb").write(crypto.dump_privatekey(crypto.FILETYPE_PEM, pkey = key))
