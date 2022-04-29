@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:latest
 WORKDIR /home/tonycs/CS446_PA4/antoniolang_PA4
 COPY pythonCode2.py pythonCode2.py
 COPY requirements.txt requirements.txt
